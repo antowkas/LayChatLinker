@@ -1,13 +1,12 @@
 import asyncio
-from random import choice as rnd_choice
 
-import CONFIG
 from sys import path
 import types
-import discord
-from discord.ext import commands
 from os import listdir
 from os.path import isfile, join
+import discord
+from discord.ext import commands
+import CONFIG
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -21,8 +20,8 @@ async def on_ready():
 
 if __name__ == '__main__':
     path.insert(1, CONFIG.MODULES_PATH)
-    for file_name in [f for f in listdir(CONFIG.MODULES_PATH) if isfile(join(CONFIG.MODULES_PATH, f))
-                                                                 and f.endswith(".py")]:
+    for file_name in [f for f in listdir(CONFIG.MODULES_PATH)
+                      if isfile(join(CONFIG.MODULES_PATH, f)) and f.endswith(".py")]:
         module = __import__(file_name[:-3])
 
         if "bot_init" in [getattr(module, a).__name__ for a in dir(module)
