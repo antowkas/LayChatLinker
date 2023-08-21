@@ -1,6 +1,5 @@
-# Config files
-*CONFIG*
-*config*
+# Config file
+/CONFIG.py
 
 # PyCharm files
-.idea
+/.idea
