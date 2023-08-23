@@ -35,7 +35,11 @@ async def on_message(message):
     if not msg:
         return
 
-    await MainBot.send(cfg.BOT_NAME, msg)
+    author = message.author
+
+    name = get_nickname(author)
+
+    await MainBot.send(cfg.BOT_NAME, name, msg)
     # await send_message(msg)
 
 
@@ -43,10 +47,15 @@ def get_channel():
     return bot.get_channel(cfg.CHANNEL)
 
 
+def get_nickname(author):
+    return f"{author.nick} (@{author.name})"
+
+
 @MainBot.add_send_func(cfg.BOT_NAME)
-async def send_message(message):  # TODO: add attachments
+async def send_message(from_bot, from_name, message):  # TODO: add attachments
     channel = get_channel()
-    await channel.send(message)
+    message = f"[{from_bot}] {from_name}: {message}"
+    await channel.send(message)  # TODO: ambed message
 
 
 @MainBot.add_init_func(cfg.BOT_NAME)
@@ -57,4 +66,3 @@ async def initialization():
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     loop.run_until_complete(initialization())
-

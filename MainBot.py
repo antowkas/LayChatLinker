@@ -28,13 +28,13 @@ class MainBot:
             asyncio.create_task(MainBot.init_func[name_bot]())
 
     @classmethod
-    async def send(cls, bot_name, content="", attachments: list = None):
+    async def send(cls, bot_name, from_name, content="", attachments: list = None):
         if attachments is None:
             attachments = []
         if content is None and attachments is None:
             raise "content and attachments is None"  # TODO: add Exception
 
         for filtered_name_bot in filter(lambda x: True if x != bot_name else False, MainBot.send_func):
-            await MainBot.send_func[filtered_name_bot](content)
+            await MainBot.send_func[filtered_name_bot](bot_name, from_name, content)
             #  TODO: add attachments
 
